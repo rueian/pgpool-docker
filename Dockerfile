@@ -1,13 +1,17 @@
-FROM postgres:9.6
+FROM debian:stretch-slim
 
-RUN apt-get update && apt-get install -y pgpool2 && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y wget gnupg && \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    apt-get update && \
+    apt-get install --no-install-recommends -y pgpool2 && \
+    apt-get remove -y --auto-remove wget gnupg && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY pcp.conf /etc/pcp.conf
-COPY pgpool.conf /etc/pgpool.conf
-COPY pool_hba.conf /etc/pool_hba.conf
-COPY docker-entrypoint.sh /
+RUN mkdir -p /var/run/pgpool/
 
-EXPOSE 5433 9898
-
+COPY ./docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["pgpool", "-F", "/etc/pcp.conf", "-f", "/etc/pgpool.conf", "-a", "/etc/pool_hba.conf", "-n"]
+
+CMD ["/usr/sbin/pgpool", "-n"]

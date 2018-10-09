@@ -1,19 +1,22 @@
 # pgpool-docker
 
-PGPool2 的 docker image
+PGPool2 3.7.5 的 debian9 docker image
 
-由於 hba 全開，故此 image 只能用在測試環境
-
-##使用方法:
-
-先開一個 pg
+## 運行
 
 ```
-docker run -d --name postgres postgres
+docker run -it --rm rueian/pgpool:3.7.5-debian9
 ```
 
-再開 pgpool ，注意 BACKEND_HOSTNAME
+掛入 config 的方法請參考 docker-compose.yml 與下方說明
+
+## docker-compose 測試方法:
+
+docker-compose 僅供示範測試
 
 ```
-docker run -d --name pgpool --link postgres -p 5433:5433 -e "BACKEND_HOSTNAME=postgres" rueian/pgpool-docker
+docker-compose up -d
 ```
+
+pgpool 需要三個設定檔分別是 pgpool.conf, pcp.conf, pool_hba.conf 可在執行時掛入 /etc/pgpool/ 底下，
+會由 docker-entrypoint.sh 將三個檔案複製到 /etc/ 底下給 pgpool 執行檔載入

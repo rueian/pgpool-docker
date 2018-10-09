@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  pgpool:
+    image: rueian/pgpool:3.7.5-debian9
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgpool.conf:/etc/pgpool/pgpool.conf
+  pg0:
+    image: postgres:10-alpine
