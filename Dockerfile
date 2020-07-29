@@ -1,8 +1,8 @@
-FROM debian:stretch-slim
+FROM debian:10-slim
 
 RUN apt-get update && \
     apt-get install -y wget gnupg && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     apt-get update && \
     apt-get install --no-install-recommends -y pgpool2 && \

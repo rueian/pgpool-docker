@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   pgpool:
-    image: rueian/pgpool:3.7.5-debian9-2
+    image: rueian/pgpool:4.1.2-debian10
     ports:
       - "5432:5432"
     volumes:
