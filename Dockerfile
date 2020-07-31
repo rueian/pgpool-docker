@@ -1,7 +1,7 @@
 FROM debian:10-slim
 
 RUN apt-get update && \
-    apt-get install -y wget gnupg && \
+    apt-get install -y wget gnupg procps && \
     echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     apt-get update && \
